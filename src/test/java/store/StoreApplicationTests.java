@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class StoreApplicationTests {
 
     @Autowired
@@ -18,12 +17,4 @@ class StoreApplicationTests {
     @Test
     void contextLoads() {
     }
-
-    @Test
-    void testIndexPage() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
 }
