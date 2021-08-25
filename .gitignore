@@ -33,3 +33,4 @@ build/
 .vscode/
 
 java.log
+java-build.log
