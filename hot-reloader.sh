@@ -8,7 +8,7 @@
 
 while true; do
 
-  mvn -T 1C clean install -Dmaven.test.skip -DskipTests -Dmaven.javadoc.skip=true
+  mvn -T 1C clean install -Dmaven.test.skip -DskipTests -Dmaven.javadoc.skip=true >> java-build.log
 
   pkill java
 

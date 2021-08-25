@@ -20,7 +20,7 @@ services:
       - store-network
 
     entrypoint:
-      - /var/www/store/hot-reloader.sh
+      - /var/www/store/watcher.sh
 
   store-db:
     image: 'postgres:13.1-alpine'
