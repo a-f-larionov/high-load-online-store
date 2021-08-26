@@ -76,7 +76,6 @@ Vue.component("login-form", {
             axios.post("/authorize", params, config)
                 .then(function (answer) {
                     bus.$emit(bus.EVENT_UPDATE_CURRENT_USER);
-
                 });
 
         }
@@ -139,8 +138,10 @@ let app = new Vue({
 
                     if (self.currentUser.id) {
                         bus.$emit(bus.EVENT_USER_LOGIN);
+                        alert("Авторизация успешна:" + self.currentUser.username);
                     } else {
                         bus.$emit(bus.EVENT_USER_LOGOUT);
+                        alert("Пользователь вышел из системы.");
                     }
                 });
         }
