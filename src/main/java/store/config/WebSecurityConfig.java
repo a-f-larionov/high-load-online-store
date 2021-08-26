@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import store.services.UserService;
 
 @Configuration
@@ -29,6 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAuthenticationFailureHandler();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -40,7 +46,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/app.js").permitAll()
                 .antMatchers("/css/main.css").permitAll()
 
+                .antMatchers("/register-user").permitAll()
+
                 .anyRequest().authenticated();
+
+        // Настройка для входа в систему
+        http.formLogin((customize) -> {
+            customize.loginPage("/");
+            customize.loginProcessingUrl("/authorize");
+            customize.successHandler(authenticationSuccessHandler());
+            customize.failureHandler(authenticationFailureHandler());
+        });
+
+        // Настройка выхода из системы
+        http.logout((customize) -> {
+            customize.logoutSuccessUrl("/");
+        });
     }
 
     @Autowired

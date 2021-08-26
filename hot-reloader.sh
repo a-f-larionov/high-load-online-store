@@ -8,10 +8,8 @@
 
 while true; do
 
-  mvn -T 1C clean install -Dmaven.test.skip -DskipTests -Dmaven.javadoc.skip=true >> java-build.log
+  java -jar -Dspring.profiles.active=prod target/store-0.0.1-SNAPSHOT.jar
 
-  pkill java
-
-  java -jar -Dspring.profiles.active=prod target/store-0.0.1-SNAPSHOT.jar >> java.log
+  sleep 1
 
 done
