@@ -18,10 +18,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min=2, message = "Не менее 2 ух символов")
+    @Size(min = 2, message = "Не менее 2 ух символов")
     private String username;
 
-    @Size(min=2, message = "Не менее 2ух символов")
+    @Size(min = 2, message = "Не менее 2ух символов")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -54,49 +54,7 @@
 
     <header>
 
-        <div class="px-3 py-2 bg-dark text-white" style="display: none;">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
-                    <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                        <li>
-                            <a href="#" class="nav-link text-secondary">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#home"/>
-                                </svg>
-                                Каталог
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#grid"/>
-                                </svg>
-                                Товары
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#table"/>
-                                </svg>
-                                Покупки
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                    <use xlink:href="#people-circle"/>
-                                </svg>
-                                Покупатели
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
+        <buttons-admin-panel></buttons-admin-panel>
 
         <buttons-panel></buttons-panel>
 
@@ -106,17 +64,83 @@
 
         <div class="col-sm">
 
-            <h4>Высоко нагруженный онлайн магазин</h4>
+            <h4>Интернет магазин</h4>
 
-            <login-form v-if="loginFormShow"></login-form>
+            <login-form v-if="isShowedBlock(blocks.LOGIN_FORM)"></login-form>
 
-            <register-form v-if="registerFormShow"></register-form>
+            <register-form v-if="isShowedBlock(blocks.REGISTER_FORM)"></register-form>
+
+            <goods-list v-if="isShowedBlock(blocks.GOODS_LIST) || true"></goods-list>
+
 
         </div>
 
     </div>
 
 </main>
+
+<template id="templateGoodsList">
+    <div>
+        <goods-item v-for="item in items" v-bind:item="item"></goods-item>
+    </div>
+</template>
+
+<template id="templateGoodItem">
+    <div>
+        {{ item.id }}
+        {{ item.name }}
+        {{ item.price }}
+        {{ item.quantity }}
+    </div>
+</template>
+
+<template id="templateButtonsAdminPanel">
+
+    <div class="px-3 py-2 bg-dark text-white" v-if="showIt">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <!--  <li>
+                          <a href="#" class="nav-link text-secondary">
+                              <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                  <use xlink:href="#home"/>
+                              </svg>
+                              Каталог
+                          </a>
+                      </li>-->
+                    <li>
+                        <a href="#" class="nav-link text-white" v-on:click="onClickGoodsIcon">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <use xlink:href="#grid"/>
+                            </svg>
+                            Товары
+                        </a>
+                    </li>
+                    <!-- <li>
+                         <a href="#" class="nav-link text-white">
+                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                 <use xlink:href="#table"/>
+                             </svg>
+                             Покупки
+                         </a>
+                     </li>-->
+
+                    <!--  <li>
+                          <a href="#" class="nav-link text-white">
+                              <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                  <use xlink:href="#people-circle"/>
+                              </svg>
+                              Покупатели
+                          </a>
+                      </li>-->
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</template>
 
 <template id="templateButtonsPanel">
     <div class="px-3 py-2 border-bottom mb-3">
@@ -129,7 +153,9 @@
                 <button type="button" class="btn btn-light text-dark me-2" v-on:click="onLoginClick"
                         v-else>Войти
                 </button>
-                <button type="button" class="btn btn-primary" v-on:click="onRegistrationClick">Регистрация</button>
+                <button type="button" class="btn btn-primary" v-on:click="onRegistrationClick">
+                    Регистрация
+                </button>
             </div>
         </div>
     </div>
