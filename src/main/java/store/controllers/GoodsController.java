@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.dto.GoodDTO;
 import store.entities.Good;
@@ -30,8 +31,36 @@ public class GoodsController {
                 .map((Good good) -> modelMapper.map(good, GoodDTO.class))
                 .collect(Collectors.toList());
     }
-<<<<<<< HEAD
+
+    @PostMapping("/goods/update")
+    public void update(@RequestBody GoodDTO goodDTO) throws Exception {
+
+        System.out.println(goodDTO.id);
+        System.out.println(goodDTO.name);
+
+        if (goodDTO.id == null) throw new Exception("Need a good ID");
+
+        Good good = modelMapper.map(goodDTO, Good.class);
+
+        goodRepository.save(good);
+    }
+
+    @PostMapping("/goods/add")
+    public void add(@RequestBody GoodDTO goodDTO) throws Exception {
+
+        System.out.println(goodDTO.id);
+        System.out.println(goodDTO.name);
+
+        if (goodDTO.id != null) throw new Exception("Good ID must be null");
+
+        Good good = modelMapper.map(goodDTO, Good.class);
+
+        goodRepository.save(good);
+    }
+
+    @PostMapping("/goods/delete")
+    public void delete(Long id) {
+
+        goodRepository.deleteById(id);
+    }
 }
-=======
-}
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb

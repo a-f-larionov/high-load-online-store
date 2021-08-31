@@ -1,8 +1,4 @@
 /* Main application script */
-<<<<<<< HEAD
-=======
-
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
 Vue.config.productionTip = false;
 
 let bus = new Vue();
@@ -10,6 +6,106 @@ let bus = new Vue();
 bus.EVENT_UPDATE_CURRENT_USER = 'update-current-user';
 bus.EVENT_USER_LOGIN = 'user-login';
 bus.EVENT_USER_LOGOUT = 'user-logout';
+
+Vue.component("good-form", {
+
+    template: "#templateGoodForm",
+
+    data: function () {
+        return {
+            showIt: false,
+
+            showAddButton: false,
+            showUpdateButton: true,
+            showDeleteButton: false,
+
+            id: null,
+            name: "",
+            description: "",
+            price: 0,
+            quantity: 0
+        };
+    },
+
+    created: function () {
+
+        let self = this;
+
+        self.showIt = app.currentUserIsAdmin;
+        self.showAddButton = app.currentUserIsAdmin;
+
+        console.log(app.editFormItem);
+
+        if (app.editFormItem) {
+
+            console.log('good is', app.editFormItem);
+
+            self.fillFields(app.editFormItem);
+        }
+
+        bus.$on(bus.EVENT_USER_LOGIN, function () {
+            self.showIt = app.currentUserIsAdmin;
+            self.showAddButton = app.currentUserIsAdmin;
+        });
+
+        bus.$on(bus.EVENT_USER_LOGOUT, function () {
+            self.showIt = app.currentUserIsAdmin;
+            self.showAddButton = false;
+            self.showEditButton = false;
+            self.showDeleteButton = false;
+        });
+    },
+    mounted: function () {
+
+    },
+    methods: {
+        fillFields: function (item) {
+
+            console.log('filled', item);
+
+            this.id = item.id;
+            this.name = item.name;
+            this.description = item.description;
+            this.price = item.price;
+            this.quantity = item.quantity;
+
+            this.showUpdateButton = true;
+            this.showDeleteButton = true;
+        },
+        onAddButtonClick: function () {
+            axios.post("/goods/add", {
+                id: null,
+                name: this.name,
+                description: this.description,
+                price: this.price,
+                quantity: this.quantity,
+            }).then(function (answer) {
+                console.log('after add', answer);
+                app.showBlock(app.blocks.GOODS_LIST);
+            });
+        },
+        onUpdateButtonClick: function () {
+            axios.post("/goods/update", {
+                id: this.id,
+                name: this.name,
+                description: this.description,
+                price: this.price,
+                quantity: this.quantity,
+            }).then(function (answer) {
+                console.log('after update', answer);
+                app.showBlock(app.blocks.GOODS_LIST);
+            });
+        },
+        onDeleteButtonClick: function () {
+            axios.post("/goods/delete", {
+                id: this.id
+            }).then(function (answer) {
+                console.log('after delete', answer);
+                app.showBlock(app.blocks.GOODS_LIST);
+            });
+        }
+    }
+});
 
 Vue.component("goods-list", {
 
@@ -30,10 +126,6 @@ Vue.component("goods-list", {
         axios.post("/goods/get-list")
             .then(function (answer) {
 
-<<<<<<< HEAD
-=======
-                console.log(answer);
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
                 self.items = answer.data;
             });
     },
@@ -47,16 +139,40 @@ Vue.component("goods-item", {
     props: ['item'],
 
     data: function () {
-        return {};
+        return {
+            showEditButton: false
+        };
     },
 
     created: function () {
+
+        let self = this;
+
+        this.showEditButton = app.currentUserIsAdmin;
+
+        console.log('good item created');
+
+        bus.$on(bus.EVENT_USER_LOGIN, function () {
+            self.showEditButton = app.currentUserIsAdmin;
+        });
+
+        bus.$on(bus.EVENT_USER_LOGOUT, function () {
+            self.showEditButton = app.currentUserIsAdmin;
+        });
     },
 
     mounted: function () {
     },
 
-    methods: {}
+    methods: {
+        onEditButtonClick: function (item) {
+            console.log(item);
+
+            app.showBlock(app.blocks.GOOD_FORM);
+
+            app.editFormItem = item;
+        }
+    }
 })
 
 Vue.component("buttons-panel", {
@@ -157,6 +273,7 @@ Vue.component("login-form", {
             axios.post("/authorize", params, config)
                 .then(function (answer) {
                     bus.$emit(bus.EVENT_UPDATE_CURRENT_USER);
+                    app.showBlock(app.blocks.GOODS_LIST);
                 });
 
         }
@@ -202,6 +319,11 @@ let app = new Vue({
         bus.$on(bus.EVENT_UPDATE_CURRENT_USER, this.updateCurrentUser);
     },
 
+    mounted: function () {
+
+        this.currentBlock = this.blocks.GOODS_LIST;
+    },
+
     data: {
         currentBlock: null,
         blocks: {
@@ -209,9 +331,12 @@ let app = new Vue({
             LOGIN_FORM: 1,
             REGISTER_FORM: 2,
             GOODS_LIST: 3,
-        },
+            GOOD_FORM: 4,
+        }
+        ,
         currentUser: null,
         currentUserIsAdmin: false,
+        editFormItem: null
     },
 
     methods: {
@@ -222,6 +347,10 @@ let app = new Vue({
 
         isShowedBlock: function (blockId) {
             return this.currentBlock === blockId;
+        },
+
+        isCurrentUserAdmin: function () {
+            return this.currentUserIsAdmin;
         },
 
         updateCurrentUser: function () {

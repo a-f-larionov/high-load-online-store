@@ -23,6 +23,5 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("Авторизация не удалась");
-        response.getWriter().flush();
     }
 }

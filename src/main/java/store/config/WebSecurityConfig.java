@@ -56,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin((customize) -> {
             customize.loginPage("/");
             customize.loginProcessingUrl("/authorize");
-            customize.successHandler(authenticationSuccessHandler());
-            customize.failureHandler(authenticationFailureHandler());
+            //customize.successHandler(authenticationSuccessHandler());
+            //customize.failureHandler(authenticationFailureHandler());
         });
 
         // Настройка выхода из системы

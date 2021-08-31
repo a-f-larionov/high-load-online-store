@@ -8,7 +8,7 @@
 
 while true; do
 
-  java -jar -Dspring.profiles.active=prod target/store-0.0.1-SNAPSHOT.jar
+  java -jar -Dspring.profiles.active=prod -Djava.security.egd=file:/dev/./urandom target/store-0.0.1-SNAPSHOT.jar
 
   sleep 1
 

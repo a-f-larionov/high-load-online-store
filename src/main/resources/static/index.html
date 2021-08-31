@@ -67,46 +67,86 @@
             <h4>Интернет магазин</h4>
 
             <login-form v-if="isShowedBlock(blocks.LOGIN_FORM)"></login-form>
-<<<<<<< HEAD
 
             <register-form v-if="isShowedBlock(blocks.REGISTER_FORM)"></register-form>
 
-            <goods-list v-if="isShowedBlock(blocks.GOODS_LIST) || true"></goods-list>
-=======
+            <goods-list v-if="isShowedBlock(blocks.GOODS_LIST)"></goods-list>
 
-            <register-form v-if="isShowedBlock(blocks.REGISTER_FORM)"></register-form>
-
-            <goods-list v-if="isShowedBlock(blocks.GOODS_LIST) || true"></goods-list>
-
-            <!--            &lt;!&ndash; todo, its must a component&ndash;&gt;-->
-            <!--            <div v-for="item in products" :key="item.id">-->
-
-            <!--                {{item.name}}-->
-
-            <!--            </div>-->
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
-
-
+            <good-form v-if="isShowedBlock(blocks.GOOD_FORM)"></good-form>
         </div>
 
     </div>
 
 </main>
 
+<template id="templateGoodForm">
+
+    <div>
+
+        <div v-if="id">ID: {{ id }}</div>
+
+        <h1 class="h3 mb-3 fw-normal">Товар</h1>
+
+        <div class="bg-light p-5 rounded form-signin">
+
+            <div class="form-floating">
+                <input v-model="name" type="text" class="form-control rounded-0 rounded-top"
+                       id="name" placeholder="Название">
+                <label for="name">Название</label>
+            </div>
+
+            <div class="form-floating">
+                <input v-model="description" type="text" class="form-control rounded-0 rounded-top"
+                       id="description" placeholder="Описание">
+                <label for="description">Описание</label>
+            </div>
+
+            <div class="form-floating">
+                <input v-model="price" type="text" class="form-control rounded-0 rounded-top"
+                       id="price" placeholder="0.00">
+                <label for="price">Цена</label>
+            </div>
+
+            <div class="form-floating">
+                <input v-model="quantity" type="text" class="form-control rounded-0 rounded-top"
+                       id="quantity" placeholder="Описание">
+                <label for="quantity">Количество</label>
+
+            </div>
+
+            <div class="form-floating mt-4">
+
+                <button type="button" class="btn btn-primary" v-if="showAddButton"
+                        v-on:click="onAddButtonClick">
+                    Добавить
+                </button>
+
+                <button type="button" class="btn btn-success" v-if="showUpdateButton"
+                        v-on:click="onUpdateButtonClick">
+                    Обновить
+                </button>
+
+                <button type="button" class="btn btn-danger" v-if="showDeleteButton"
+                        v-on:click="onDeleteButtonClick">
+                    Удалить
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
 <template id="templateGoodsList">
     <div>
-<<<<<<< HEAD
-        <goods-item v-for="item in items" v-bind:item="item"></goods-item>
-=======
 
-        <!--<div v-for="item in items" :key="item.id">
-            {{item.name}}
--->
-        <goods-item v-for="item in items" v-bind:item="item"></goods-item>
+        <goods-item v-for="item in items"
+                    v-bind:key=item.id
+                    v-bind:item="item">
+        </goods-item>
 
-        <!--     </div>-->
-
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
     </div>
 </template>
 
@@ -116,6 +156,11 @@
         {{ item.name }}
         {{ item.price }}
         {{ item.quantity }}
+
+        <button type="button" class="btn btn-info" v-if="showEditButton"
+                v-on:click="onEditButtonClick(item)">
+            Редактировать
+        </button>
     </div>
 </template>
 

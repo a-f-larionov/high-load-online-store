@@ -3,6 +3,8 @@ package store.dto;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @ToString
 @Data
 public class GoodDTO {
@@ -12,8 +14,9 @@ public class GoodDTO {
     public String name;
 
     public String description;
-<<<<<<< HEAD
+
+    public BigDecimal price;
+
+    public Long quantity;
+
 }
-=======
-}
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
