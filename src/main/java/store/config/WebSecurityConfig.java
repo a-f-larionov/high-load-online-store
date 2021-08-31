@@ -48,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/register-user").permitAll()
 
+                .antMatchers("/goods/get-list").permitAll()
+
                 .anyRequest().authenticated();
 
         // Настройка для входа в систему

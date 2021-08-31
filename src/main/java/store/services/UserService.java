@@ -2,6 +2,7 @@ package store.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -94,5 +95,17 @@ public class UserService implements UserDetailsService {
         user.setPassword(null);
 
         return user;
+    }
+
+    public boolean currentUserHasRole(String roleName) {
+        Authentication object = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+        if (object != null && object.getAuthorities().stream().anyMatch(a ->
+                a.getAuthority().equals("ADMIN"))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

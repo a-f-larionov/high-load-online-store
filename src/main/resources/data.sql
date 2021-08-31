@@ -23,7 +23,7 @@ from good
 where description like '%test_data%';
 
 insert into good(name, description, price, quantity)
-values ('good 5', 'description 5 test_data', 500, 1),
-       ('good 1', 'description 1 test_data', 5.5, 10),
-       ('good 2', 'description 2 test_data', 25.5, 100),
-       ('good 3', 'description 3 test_data', 55.5, 1000);
+values ('Товар 1 Молоко', 'Молоко 5 test_data', 500, 1),
+       ('Товар 2 Кефир', 'Кефир 1 test_data', 5.5, 10),
+       ('Товар 3 Хлеб', 'Хлеб 2 test_data', 25.5, 100),
+       ('Товар 4 Соль', 'Соль 3 test_data', 55.5, 1000);

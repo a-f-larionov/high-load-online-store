@@ -1,4 +1,3 @@
-
 package store.config;
 
 import lombok.RequiredArgsConstructor;
@@ -17,13 +16,13 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
+            HttpServletRequest request,
+            HttpServletResponse response,
             AuthenticationException e) throws IOException {
 
-        httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write("Авторизация не удалась");
-        httpServletResponse.getWriter().flush();
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("Авторизация не удалась");
+        response.getWriter().flush();
     }
 }
