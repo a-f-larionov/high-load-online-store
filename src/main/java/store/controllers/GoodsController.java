@@ -30,4 +30,8 @@ public class GoodsController {
                 .map((Good good) -> modelMapper.map(good, GoodDTO.class))
                 .collect(Collectors.toList());
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb

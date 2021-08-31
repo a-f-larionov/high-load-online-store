@@ -1,4 +1,8 @@
 /* Main application script */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
 Vue.config.productionTip = false;
 
 let bus = new Vue();
@@ -26,6 +30,10 @@ Vue.component("goods-list", {
         axios.post("/goods/get-list")
             .then(function (answer) {
 
+<<<<<<< HEAD
+=======
+                console.log(answer);
+>>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
                 self.items = answer.data;
             });
     },

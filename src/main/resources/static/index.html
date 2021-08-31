@@ -67,10 +67,24 @@
             <h4>Интернет магазин</h4>
 
             <login-form v-if="isShowedBlock(blocks.LOGIN_FORM)"></login-form>
+<<<<<<< HEAD
 
             <register-form v-if="isShowedBlock(blocks.REGISTER_FORM)"></register-form>
 
             <goods-list v-if="isShowedBlock(blocks.GOODS_LIST) || true"></goods-list>
+=======
+
+            <register-form v-if="isShowedBlock(blocks.REGISTER_FORM)"></register-form>
+
+            <goods-list v-if="isShowedBlock(blocks.GOODS_LIST) || true"></goods-list>
+
+            <!--            &lt;!&ndash; todo, its must a component&ndash;&gt;-->
+            <!--            <div v-for="item in products" :key="item.id">-->
+
+            <!--                {{item.name}}-->
+
+            <!--            </div>-->
+>>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
 
 
         </div>
@@ -81,7 +95,18 @@
 
 <template id="templateGoodsList">
     <div>
+<<<<<<< HEAD
         <goods-item v-for="item in items" v-bind:item="item"></goods-item>
+=======
+
+        <!--<div v-for="item in items" :key="item.id">
+            {{item.name}}
+-->
+        <goods-item v-for="item in items" v-bind:item="item"></goods-item>
+
+        <!--     </div>-->
+
+>>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
     </div>
 </template>
 
