@@ -102,11 +102,9 @@ public class UserService implements UserDetailsService {
                 .getContext()
                 .getAuthentication();
         if (object != null && object.getAuthorities().stream().anyMatch(a ->
-<<<<<<< HEAD
+
                 a.getAuthority().equals(roleName))) {
-=======
-                a.getAuthority().equals("ADMIN"))) {
->>>>>>> 28250f93afcc2bb51eaa278e27a8027518af40bb
+
             return true;
         } else {
             return false;
