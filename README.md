@@ -1,3 +1,3 @@
-# high-load-online-store
+# Project: Store
 High load online store
 
