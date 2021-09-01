@@ -16,10 +16,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             HttpServletResponse response,
             Authentication authentication) throws IOException {
 
-        System.out.println("SUCCESS1");
         response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("Авторизация удалась");
-
+        response.getWriter().flush();
     }
 }

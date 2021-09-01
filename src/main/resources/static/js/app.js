@@ -34,11 +34,8 @@ Vue.component("good-form", {
         self.showIt = app.currentUserIsAdmin;
         self.showAddButton = app.currentUserIsAdmin;
 
-        console.log(app.editFormItem);
 
         if (app.editFormItem) {
-
-            console.log('good is', app.editFormItem);
 
             self.fillFields(app.editFormItem);
         }
@@ -61,8 +58,6 @@ Vue.component("good-form", {
     methods: {
         fillFields: function (item) {
 
-            console.log('filled', item);
-
             this.id = item.id;
             this.name = item.name;
             this.description = item.description;
@@ -80,7 +75,7 @@ Vue.component("good-form", {
                 price: this.price,
                 quantity: this.quantity,
             }).then(function (answer) {
-                console.log('after add', answer);
+
                 app.showBlock(app.blocks.GOODS_LIST);
             });
         },
@@ -92,7 +87,7 @@ Vue.component("good-form", {
                 price: this.price,
                 quantity: this.quantity,
             }).then(function (answer) {
-                console.log('after update', answer);
+
                 app.showBlock(app.blocks.GOODS_LIST);
             });
         },
@@ -100,7 +95,7 @@ Vue.component("good-form", {
             axios.post("/goods/delete", {
                 id: this.id
             }).then(function (answer) {
-                console.log('after delete', answer);
+
                 app.showBlock(app.blocks.GOODS_LIST);
             });
         }
@@ -140,7 +135,9 @@ Vue.component("goods-item", {
 
     data: function () {
         return {
-            showEditButton: false
+            showEditButton: false,
+            showPurchaseButton: false,
+            purchaseQuantity: 1,
         };
     },
 
@@ -149,15 +146,16 @@ Vue.component("goods-item", {
         let self = this;
 
         this.showEditButton = app.currentUserIsAdmin;
-
-        console.log('good item created');
+        this.showPurchaseButton = app.currentUser && !app.currentUserIsAdmin;
 
         bus.$on(bus.EVENT_USER_LOGIN, function () {
             self.showEditButton = app.currentUserIsAdmin;
+            self.showPurchaseButton = app.currentUser && !app.currentUserIsAdmin;
         });
 
         bus.$on(bus.EVENT_USER_LOGOUT, function () {
             self.showEditButton = app.currentUserIsAdmin;
+            self.showPurchaseButton = app.currentUser && !app.currentUserIsAdmin;
         });
     },
 
@@ -166,11 +164,17 @@ Vue.component("goods-item", {
 
     methods: {
         onEditButtonClick: function (item) {
-            console.log(item);
 
             app.showBlock(app.blocks.GOOD_FORM);
 
             app.editFormItem = item;
+        },
+        onPurchaseButtonClick: function (item) {
+
+            axios.post("/purchase/makeOne", {
+                goodId: item.id,
+                quantity: this.purchaseQuantity,
+            });
         }
     }
 })
@@ -195,6 +199,7 @@ Vue.component("buttons-panel", {
     },
 
     mounted: function () {
+        bus.$emit(bus.EVENT_UPDATE_CURRENT_USER);
     },
 
     methods: {
@@ -332,8 +337,7 @@ let app = new Vue({
             REGISTER_FORM: 2,
             GOODS_LIST: 3,
             GOOD_FORM: 4,
-        }
-        ,
+        },
         currentUser: null,
         currentUserIsAdmin: false,
         editFormItem: null
@@ -349,15 +353,16 @@ let app = new Vue({
             return this.currentBlock === blockId;
         },
 
-        isCurrentUserAdmin: function () {
-            return this.currentUserIsAdmin;
-        },
-
         updateCurrentUser: function () {
             let self = this;
 
             axios.post("/get-current-user")
                 .then(function (answer) {
+                    if (!answer.data || !answer.data.id) {
+                        self.currentUser = null;
+                        return;
+                    }
+
                     self.currentUser = answer.data;
 
                     if (self.currentUser.id) {
@@ -368,12 +373,12 @@ let app = new Vue({
                                 bus.$emit(bus.EVENT_USER_LOGIN);
                             });
 
-                        alert("Авторизация успешна:" + self.currentUser.username);
-                        app.showBlock(app.blocks.NONE);
+                        //alert("Авторизация успешна:" + self.currentUser.username);
+                        app.showBlock(app.blocks.GOODS_LIST);
                     } else {
                         bus.$emit(bus.EVENT_USER_LOGOUT);
-                        alert("Пользователь вышел из системы.");
-                        app.showBlock(app.blocks.NONE);
+                        //alert("Пользователь вышел из системы.");
+                        app.showBlock(app.blocks.GOODS_LIST);
                     }
                 });
         }

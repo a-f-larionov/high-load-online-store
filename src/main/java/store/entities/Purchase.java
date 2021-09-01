@@ -21,4 +21,6 @@ public class Purchase {
     private long quantity;
 
     private BigDecimal price;
+
+    //@todo datetime here
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import store.dto.GoodDTO;
 import store.entities.Good;
@@ -35,9 +36,6 @@ public class GoodsController {
     @PostMapping("/goods/update")
     public void update(@RequestBody GoodDTO goodDTO) throws Exception {
 
-        System.out.println(goodDTO.id);
-        System.out.println(goodDTO.name);
-
         if (goodDTO.id == null) throw new Exception("Need a good ID");
 
         Good good = modelMapper.map(goodDTO, Good.class);
@@ -48,9 +46,6 @@ public class GoodsController {
     @PostMapping("/goods/add")
     public void add(@RequestBody GoodDTO goodDTO) throws Exception {
 
-        System.out.println(goodDTO.id);
-        System.out.println(goodDTO.name);
-
         if (goodDTO.id != null) throw new Exception("Good ID must be null");
 
         Good good = modelMapper.map(goodDTO, Good.class);
@@ -59,8 +54,12 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/delete")
-    public void delete(Long id) {
+    public void delete(@RequestBody GoodDTO goodDTO) throws Exception {
 
-        goodRepository.deleteById(id);
+        if (goodDTO.getId() == null) {
+            throw new Exception("good/delete id must not be null");
+        }
+
+        goodRepository.deleteById(goodDTO.getId());
     }
 }

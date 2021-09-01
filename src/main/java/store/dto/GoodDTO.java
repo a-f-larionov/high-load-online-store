@@ -18,5 +18,4 @@ public class GoodDTO {
     public BigDecimal price;
 
     public Long quantity;
-
 }
