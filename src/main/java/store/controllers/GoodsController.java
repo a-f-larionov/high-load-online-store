@@ -1,17 +1,15 @@
 package store.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import store.dto.GoodDTO;
 import store.entities.Good;
 import store.repositories.GoodRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +21,7 @@ public class GoodsController {
 
     private final GoodRepository goodRepository;
 
+    @Cacheable
     @PostMapping("/goods/get-list")
     public List<GoodDTO> getList() {
 

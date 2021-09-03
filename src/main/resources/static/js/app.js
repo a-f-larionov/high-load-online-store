@@ -7,6 +7,31 @@ bus.EVENT_UPDATE_CURRENT_USER = 'update-current-user';
 bus.EVENT_USER_LOGIN = 'user-login';
 bus.EVENT_USER_LOGOUT = 'user-logout';
 
+Vue.component("purchase-list", {
+
+    template: "#templatePurchseList",
+
+    data: function () {
+        return {
+            items: []
+        };
+    },
+
+    created: function () {
+    },
+
+    mounted: function () {
+        let self = this;
+
+        axios.post("/purchase/get-list")
+            .then(function (answer) {
+
+                self.items = answer.data;
+            });
+    },
+    methods: {}
+});
+
 Vue.component("good-form", {
 
     template: "#templateGoodForm",
@@ -246,6 +271,9 @@ Vue.component("buttons-admin-panel", {
     methods: {
         onClickGoodsIcon: function () {
             app.showBlock(app.blocks.GOODS_LIST);
+        },
+        onClickPurchaseIcon: function () {
+            app.showBlock(app.blocks.PURCHASE_LIST);
         }
     }
 });
@@ -337,6 +365,7 @@ let app = new Vue({
             REGISTER_FORM: 2,
             GOODS_LIST: 3,
             GOOD_FORM: 4,
+            PURCHASE_LIST: 5
         },
         currentUser: null,
         currentUserIsAdmin: false,
@@ -360,6 +389,7 @@ let app = new Vue({
                 .then(function (answer) {
                     if (!answer.data || !answer.data.id) {
                         self.currentUser = null;
+                        self.currentUserIsAdmin = null;
                         return;
                     }
 

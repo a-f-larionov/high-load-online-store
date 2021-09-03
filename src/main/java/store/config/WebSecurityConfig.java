@@ -50,6 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/goods/get-list").permitAll()
 
+                .antMatchers("/get-current-user").permitAll()
+                .antMatchers("/goods/add").hasRole("ADMIN")
+                .antMatchers("/goods/delete").hasRole("ADMIN")
+                .antMatchers("/goods/update").hasRole("ADMIN")
+
                 .anyRequest().authenticated();
 
         // Настройка для входа в систему

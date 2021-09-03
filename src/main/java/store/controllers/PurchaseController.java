@@ -2,6 +2,7 @@ package store.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,9 @@ public class PurchaseController {
     private final PurchaseRepository purchaseRepository;
 
     @PostMapping("/purchase/makeOne")
+    @Transactional
     public void purchase(@RequestBody PurchaseDTO purchaseDTO) throws Exception {
+
         // получить товар из бд
         Optional<Good> goodOptional = goodRepository.findById(purchaseDTO.getGoodId());
 
@@ -41,6 +44,7 @@ public class PurchaseController {
         if (good.getQuantity() < purchaseDTO.getQuantity()) {
             throw new Exception("Goods not amount enought");
         }
+
         // снизить кол-во на складе
         good.setQuantity(good.getQuantity() - purchaseDTO.getQuantity());
 
