@@ -55,6 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/goods/delete").hasRole("ADMIN")
                 .antMatchers("/goods/update").hasRole("ADMIN")
 
+                // For stress test purpose
+                .antMatchers("/purchase/makeOne").permitAll()
+
                 .anyRequest().authenticated();
 
         // Настройка для входа в систему

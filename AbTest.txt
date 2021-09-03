@@ -1,4 +1,14 @@
---------------------------------------------------------http://localhost:8080/
+Server:
+Ubuntu 18.04 Bionic Beaver
+SSD 10Gb
+Memory : 1Gb
+CPU: 2Ghz 1 Core
+Запрос клиента: 10 000 запросов 52 секунды
+Запрос списка товаров: 10 000 запросов 72 секунды
+Запрос создания товара(успешный): 10 000 запросов 73 секунды
+
+-------------
+52 sec for 10 000 requests -----------------------------------http://localhost:8080/
 ab -n 10000 -c 1000 http://localhost:8080/
 This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -53,4 +63,125 @@ Percentage of the requests served within a certain time (ms)
   98%   9753
   99%  10928
  100%  15320 (longest request)
-root@scw-sharp-yonath:/var/www/store#
+
+----------------------
+72 src 10 000 requests---------------------------------http://localhost:8080/goods/get-list
+ab -m POST  -n 10000 -c 1000 http://localhost:8080/goods/get-list
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /goods/get-list
+Document Length:        736 bytes
+
+Concurrency Level:      1000
+Time taken for tests:   72.661 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      10230000 bytes
+HTML transferred:       7360000 bytes
+Requests per second:    137.63 [#/sec] (mean)
+Time per request:       7266.095 [ms] (mean)
+Time per request:       7.266 [ms] (mean, across all concurrent requests)
+Transfer rate:          137.49 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   54 220.3      0    1035
+Processing:  2858 6912 1282.9   6683   14603
+Waiting:     2827 6722 1311.4   6423   14442
+Total:       2943 6967 1394.0   6692   14646
+
+Percentage of the requests served within a certain time (ms)
+  50%   6692
+  66%   7046
+  75%   7249
+  80%   7390
+  90%   8486
+  95%  10063
+  98%  11752
+  99%  12616
+ 100%  14646 (longest request)
+
+
+
+73 sec for  10000 requests -----------------------http://localhost:8080/purchase/makeOne
+
+ ab -p POST_CONTENT.json -n 10000 -c 1000 -T application/json -H "Content-type: text/html; charset=cp1251" http://localhost:8080/purchase/makeOne
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /purchase/makeOne
+Document Length:        0 bytes
+
+Concurrency Level:      1000
+Time taken for tests:   73.762 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      2740000 bytes
+Total body sent:        2220000
+HTML transferred:       0 bytes
+Requests per second:    135.57 [#/sec] (mean)
+Time per request:       7376.155 [ms] (mean)
+Time per request:       7.376 [ms] (mean, across all concurrent requests)
+Transfer rate:          36.28 [Kbytes/sec] received
+                        29.39 kb/s sent
+                        65.67 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   52 212.5      0    1031
+Processing:   389 7004 1653.5   7206   23053
+Waiting:      341 6789 1640.9   7000   22704
+Total:        521 7056 1624.1   7216   23053
+
+Percentage of the requests served within a certain time (ms)
+  50%   7216
+  66%   7477
+  75%   7653
+  80%   7767
+  90%   8152
+  95%   8594
+  98%  10094
+  99%  13357
+ 100%  23053 (longest request)

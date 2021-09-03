@@ -36,13 +36,13 @@ public class PurchaseController {
 
         // проверить наличие товара и кол-ва
         if (!goodOptional.isPresent()) {
-            throw new Exception("Good not found");
+            throw new Exception("Good not found" + purchaseDTO.getGoodId());
         }
 
         Good good = goodOptional.get();
 
         if (good.getQuantity() < purchaseDTO.getQuantity()) {
-            throw new Exception("Goods not amount enought");
+            throw new Exception("Goods not amount enough");
         }
 
         // снизить кол-во на складе
