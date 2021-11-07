@@ -2,7 +2,8 @@ FROM openjdk:8
 
 WORKDIR /var/www/store/
 
-# requirements for hot reloader script
 RUN apt update
+
+# requirements for hot reloader script
 RUN apt install inotify-tools -y
 RUN apt install maven -y

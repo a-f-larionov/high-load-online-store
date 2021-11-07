@@ -4,6 +4,14 @@ High load online store
 
 Тестовое задание, реализации ИМ, с нагрузкой в 10 000 запросов в минуту(~150 в секунду)
 
+
+#### Install
+
+    git clone git clone https://github.com/a-f-larionov/store.git
+
+
+
+
 #### Apache AB Стресс Тестирование:
     Server:
     Ubuntu 18.04 Bionic Beaver
