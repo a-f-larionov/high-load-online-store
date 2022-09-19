@@ -3,6 +3,7 @@ package store.entities;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     @Size(min = 2, message = "Не менее 2ух символов")
+    @Column(unique = true)
     private String name;
 
     @Override

@@ -101,9 +101,9 @@ public class UserService implements UserDetailsService {
         Authentication object = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
-        if (object != null && object.getAuthorities().stream().anyMatch(a ->
-
-                a.getAuthority().equals(roleName))) {
+        if (object != null && object.getAuthorities()
+                .stream()
+                .anyMatch(authority -> authority.getAuthority().equals(roleName))) {
 
             return true;
         } else {

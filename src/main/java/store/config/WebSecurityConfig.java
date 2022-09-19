@@ -40,25 +40,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
+
         http.authorizeRequests()
+
+                .antMatchers("/h2-console/**").permitAll()
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/js/app.js").permitAll()
                 .antMatchers("/css/main.css").permitAll()
 
                 .antMatchers("/register-user").permitAll()
+                .antMatchers("/get-current-user").permitAll()
 
                 .antMatchers("/goods/get-list").permitAll()
+                .antMatchers("/goods/add").hasAuthority("ADMIN")
+                .antMatchers("/goods/delete").hasAuthority("ADMIN")
+                .antMatchers("/goods/update").hasAuthority("ADMIN")
 
-                .antMatchers("/get-current-user").permitAll()
-                .antMatchers("/goods/add").hasRole("ADMIN")
-                .antMatchers("/goods/delete").hasRole("ADMIN")
-                .antMatchers("/goods/update").hasRole("ADMIN")
 
                 // For stress test purpose
                 .antMatchers("/purchase/makeOne").permitAll()
 
-                .anyRequest().authenticated();
+                .anyRequest()
+                .authenticated();
 
         // Настройка для входа в систему
         http.formLogin((customize) -> {
@@ -69,9 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         });
 
         // Настройка выхода из системы
-        http.logout((customize) -> {
-            customize.logoutSuccessUrl("/");
-        });
+        http.logout((customize) -> customize.logoutSuccessUrl("/"));
     }
 
     @Autowired

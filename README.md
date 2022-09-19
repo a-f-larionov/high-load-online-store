@@ -1,18 +1,31 @@
 # Project: Store
-High load online store
+Высоконагруженный магазин
 
 
-Тестовое задание, реализации ИМ, с нагрузкой в 10 000 запросов в минуту(~150 в секунду)
+Тестовое задание, реализация ИМ, с нагрузкой в 10 000 запросов в минуту (~150 в секунду)
 
 
-#### Install
+#### Установка
 
-    git clone git clone https://github.com/a-f-larionov/store.git
+    git clone https://github.com/a-f-larionov/store.git
+
+#### Запуск docker
+
+    docker-compose up
+
+#### Запуск локально
+
+    Локальный профиль -Dspring.profiles.active=local
 
 
+#### Демо
+
+    Открываем страницу http://localhost:8080/
+    Логин: admin
+    Пароль: admin
 
 
-#### Apache AB Стресс Тестирование:
+#### Отчёт по Apache AB Стресс Тестированию:
     Server:
     Ubuntu 18.04 Bionic Beaver
     SSD 10Gb    

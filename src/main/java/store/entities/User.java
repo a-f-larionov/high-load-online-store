@@ -4,7 +4,14 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
@@ -19,6 +26,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Size(min = 2, message = "Не менее 2 ух символов")
+    @Column(unique = true)
     private String username;
 
     @Size(min = 2, message = "Не менее 2ух символов")
